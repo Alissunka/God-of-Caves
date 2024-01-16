@@ -1,6 +1,28 @@
-def main():
-    print('My first git program')
+import pygame
+
+pygame.init()
+
+display_width = 800
+display_height = 600
+
+display = pygame.display.set_mode((display_width, display_height))
+pygame.display.set_caption('God of Caves')
+
+"""icon = pygame.image.load('icon.png')
+pygame.display.set_icon(icon)"""
 
 
-if __name__ == '__main__':
-    main()
+def run_game():
+    game = True
+
+    while game:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+
+        display.fill((255, 255, 255))
+        pygame.display.update()
+
+
+run_game()
