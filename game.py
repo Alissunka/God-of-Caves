@@ -11,15 +11,15 @@ display_height = 600
 display = pygame.display.set_mode((display_width, display_height))
 pygame.display.set_caption('God of Caves')
 
-"""pygame.mixer.music.load()
-pygame.mixer.music.set_volume(0.5)"""
+pygame.mixer.music.load("unki-shteker.mp3")
+pygame.mixer.music.set_volume(0.5)
 
-"""icon = pygame.image.load('icon.png')
-pygame.display.set_icon(icon)"""
+icon = pygame.image.load('icon.png')
+pygame.display.set_icon(icon)
 
 
 def run_game():
-    """pygame.mixer.music.play(-1)"""
+    pygame.mixer.music.play(-1)
     game = True
     while game:
         for event in pygame.event.get():
@@ -41,6 +41,9 @@ def print_pause(message, x, y, font_color = (0, 0, 0), font_type = 'Font_Pause.t
 
 def pause():
     paused = True
+
+    pygame.mixer.music.pause()
+
     while paused:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -55,5 +58,7 @@ def pause():
 
         pygame.display.update()
         clock.tick(20)
+
+    pygame.mixer.music.unpause()
 
 run_game()
