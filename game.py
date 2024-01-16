@@ -14,8 +14,8 @@ pygame.display.set_caption('God of Caves')
 pygame.mixer.music.load("unki-shteker.mp3")
 pygame.mixer.music.set_volume(0.2)
 
-'''icon = pygame.image.load('icon.png')
-pygame.display.set_icon(icon)'''
+icon = pygame.image.load('icon.png')
+pygame.display.set_icon(icon)
 
 
 def run_game():
