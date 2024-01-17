@@ -7,6 +7,7 @@ screen = pygame.display.set_mode(screen_size)
 FPS = 60
 
 clock = pygame.time.Clock()
+pygame.display.set_caption("Fox Run")
 
 pygame.mixer.music.load("unki-shteker.mp3")
 pygame.mixer.music.set_volume(0.2)
@@ -16,8 +17,29 @@ button_sound = pygame.mixer.Sound("buttonsound.mp3")
 icon = pygame.image.load('icon.png')
 pygame.display.set_icon(icon)
 
-def draw_menu():
-    pass
+def leavebutton():
+    pygame.quit()
+    quit()
+
+def draw_startmenu():
+    menu_background = pygame.image.load("menushka.jpg")
+    show = True
+
+    start_button = Button(180, 65)
+    leave_button = Button(180, 65)
+
+    while show:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+
+        screen.blit(menu_background, (0, 0))
+        start_button.draw(70, 250, "Start", None, 50)
+        leave_button.draw(70, 340, "Leave", leavebutton, 50)
+
+        pygame.display.update()
+        clock.tick(50)
 
 def load_image(name, color_key=None):
     fullname = os.path.join('data', name)
@@ -36,7 +58,7 @@ def load_image(name, color_key=None):
 def start_screen():
     fon = pygame.transform.scale(load_image('fon.jpg'), screen_size)
     screen.blit(fon, (0, 0))
-
+    pygame.mixer.music.play(-1)
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -53,9 +75,9 @@ class Button:
         self.width = width
         self.height = height
         self.color1 = (218, 193, 144)
-        self.color2 = (240, 233, 122)
+        self.color2 = (192, 128, 0)
 
-    def draw(self, x, y, text, action=None):
+    def draw(self, x, y, text, action=None, font=30):
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
         if x < mouse[0] < x + self.width and y < mouse[1] < y + self.height:
@@ -68,21 +90,17 @@ class Button:
         else:
             pygame.draw.rect(screen, self.color2, (x, y, self.width, self.height))
 
-        print_text(text, x + 10, y + 10)
+        print_text(text, x + 10, y + 10, font_type='MonaspaceXenon-Bold.otf', font_size=font)
 
 def run_game():
     start_screen()
-    pygame.mixer.music.play(-1)
+    draw_startmenu()
     game = True
     while game:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
-
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_ESCAPE]:
-            pause()
 
         screen.fill((255, 255, 255))
         pygame.display.update()
