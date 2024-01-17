@@ -10,9 +10,14 @@ clock = pygame.time.Clock()
 
 pygame.mixer.music.load("unki-shteker.mp3")
 pygame.mixer.music.set_volume(0.2)
+button_sound = pygame.mixer.Sound("buttonsound.mp3")
+
 
 icon = pygame.image.load('icon.png')
 pygame.display.set_icon(icon)
+
+def draw_menu():
+
 
 def load_image(name, color_key=None):
     fullname = os.path.join('data', name)
@@ -43,11 +48,33 @@ def start_screen():
         pygame.display.flip()
         clock.tick(FPS)
 
+class Button:
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+        self.color1 = (218, 193, 144)
+        self.color2 = (240, 233, 122)
+
+    def draw(self, x, y, text, action=None):
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()
+        if x < mouse[0] < x + self.width and y < mouse[1] < y + self.height:
+            pygame.draw.rect(screen, self.color1, (x, y, self.width, self.height))
+            if click[0] == 1:
+                pygame.mixer.Sound.play(button_sound)
+                pygame.time.delay(350)
+                if action is not None:
+                    action()
+        else:
+            pygame.draw.rect(screen, self.color2, (x, y, self.width, self.height))
+
+        print_text(text, x + 10, y + 10)
 
 def run_game():
     start_screen()
     pygame.mixer.music.play(-1)
     game = True
+    button = Button(50, 50)
     while game:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -59,9 +86,15 @@ def run_game():
             pause()
 
         screen.fill((255, 255, 255))
+        button.draw(200, 450, 'wow')
         pygame.display.update()
 
 def print_pause(message, x, y, font_color = (0, 0, 0), font_type = 'Font_Pause.ttf', font_size = 45):
+    font_type = pygame.font.Font(font_type, font_size)
+    text = font_type.render(message, True, font_color)
+    screen.blit(text, (x, y))
+
+def print_text(message, x, y, font_color = (0, 0, 0), font_type = 'Font_Pause.ttf', font_size = 30):
     font_type = pygame.font.Font(font_type, font_size)
     text = font_type.render(message, True, font_color)
     screen.blit(text, (x, y))
