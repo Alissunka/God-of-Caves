@@ -2,7 +2,7 @@ import pygame
 import os
 
 pygame.init()
-screen_size = (1200, 800)
+screen_size = (1024, 576)
 screen = pygame.display.set_mode(screen_size)
 FPS = 60
 
@@ -17,7 +17,7 @@ icon = pygame.image.load('icon.png')
 pygame.display.set_icon(icon)
 
 def draw_menu():
-
+    pass
 
 def load_image(name, color_key=None):
     fullname = os.path.join('data', name)
@@ -74,7 +74,6 @@ def run_game():
     start_screen()
     pygame.mixer.music.play(-1)
     game = True
-    button = Button(50, 50)
     while game:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -86,7 +85,6 @@ def run_game():
             pause()
 
         screen.fill((255, 255, 255))
-        button.draw(200, 450, 'wow')
         pygame.display.update()
 
 def print_pause(message, x, y, font_color = (0, 0, 0), font_type = 'Font_Pause.ttf', font_size = 45):
@@ -110,7 +108,7 @@ def pause():
                 pygame.quit()
                 quit()
 
-        print_pause('Пауза. Нажмите Enter.', 450, 370)
+        print_pause('Пауза. Нажмите Enter.', 370, 250)
 
         keys = pygame.key.get_pressed()
         if keys[pygame.K_RETURN]:
