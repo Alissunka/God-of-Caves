@@ -56,7 +56,7 @@ def load_image(name, color_key=None):
     return image
 
 def start_screen():
-    fon = pygame.transform.scale(load_image('fon.jpg'), screen_size)
+    fon = pygame.transform.scale(load_image('fox.jpg'), screen_size)
     screen.blit(fon, (0, 0))
     pygame.mixer.music.play(-1)
     while True:
