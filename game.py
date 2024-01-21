@@ -2,7 +2,7 @@ import pygame
 import os
 
 pygame.init()
-screen_size = (1024, 576)
+screen_size = (1300, 800)
 screen = pygame.display.set_mode(screen_size)
 FPS = 60
 
@@ -22,7 +22,7 @@ def leavebutton():
     quit()
 
 def draw_startmenu():
-    menu_background = pygame.image.load("menushka.jpg")
+    menu_background = pygame.transform.scale(load_image('menushka.jpg'), screen_size)
     show = True
 
     start_button = Button(180, 65)
@@ -35,11 +35,11 @@ def draw_startmenu():
                 quit()
 
         screen.blit(menu_background, (0, 0))
-        start_button.draw(70, 250, "Start", None, 50)
-        leave_button.draw(70, 340, "Leave", leavebutton, 50)
+        start_button.draw(100, 315, "Start", None, 50)
+        leave_button.draw(100, 405, "Leave", leavebutton, 50)
 
         pygame.display.update()
-        clock.tick(50)
+        clock.tick(FPS)
 
 def load_image(name, color_key=None):
     fullname = os.path.join('data', name)
@@ -64,9 +64,9 @@ def start_screen():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
-            elif event.type == pygame.KEYDOWN or \
-                    event.type == pygame.MOUSEBUTTONDOWN:
-                return
+            elif (event.type == pygame.KEYDOWN or \
+                    event.type == pygame.MOUSEBUTTONDOWN) and pygame.mouse.get_pos()[0] > 280:
+                draw_startmenu()
         pygame.display.flip()
         clock.tick(FPS)
 
@@ -94,7 +94,6 @@ class Button:
 
 def run_game():
     start_screen()
-    draw_startmenu()
     game = True
     while game:
         for event in pygame.event.get():
@@ -102,8 +101,8 @@ def run_game():
                 pygame.quit()
                 quit()
 
-        screen.fill((255, 255, 255))
         pygame.display.update()
+        clock.tick(FPS)
 
 def print_pause(message, x, y, font_color = (0, 0, 0), font_type = 'Font_Pause.ttf', font_size = 45):
     font_type = pygame.font.Font(font_type, font_size)
